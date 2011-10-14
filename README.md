@@ -10,7 +10,7 @@ The compass itself is created entirely with CSS.
 
 A couple of implementation notes:
 
- - There's easing on the rotation to make it a little less jerky, but this has to be turned off whenever the compass spins through north. CSS easing does not wrap-around.
+ - There's easing on the rotation to make it a little less jerky, but this has to be turned off whenever the compass spins through north. CSS transitions do not wrap-around transforms.
 
  - window.orientation needs to be added to the heading so that a landscape view still points to physical north
 
