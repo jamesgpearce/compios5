@@ -2,6 +2,8 @@ I love Device APIs, even the non-standard ones. This is a web-based compass appl
 
 It's been tested on iPhone 4 hardware. Should work fine on iPhone 4S. Layouts are probably slightly strange on the iPad.
 
+Try it out directly on http://jamesgpearce.github.com/compios5/
+
 This uses the browser's new webkitCompassHeading property of the device orientation event. http://lists.w3.org/Archives/Public/public-geolocation/2011Jul/0014.html
 
 The compass itself is created entirely with CSS.
