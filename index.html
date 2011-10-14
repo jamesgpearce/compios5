@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+    <head>
+        <title>compios5</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <script>
+            window.addEventListener('load', function() {
+
+                var compass = document.body.appendChild(document.createElement('article'));
+                compass.id='compass';
+                var spinner = compass.appendChild(document.createElement('article'));
+                spinner.id='spinner';
+                var pin = spinner.appendChild(document.createElement('article'));
+                pin.id='pin';
+
+                for (var degrees=0, degree; degrees<360; degrees+=30) {
+                    degree = spinner.appendChild(document.createElement('label'));
+                    degree.className='degree';
+                    degree.innerText = degrees;
+                    degree.style.webkitTransform = 'rotateZ(' + degrees + 'deg)'
+                }
+                ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'].forEach(function(label, index) {
+                    var main = ((index % 2)?'':' main');
+                    point = spinner.appendChild(document.createElement('label'));
+                    point.className='point' + main;
+                    point.innerText = label;
+                    point.style.webkitTransform = 'rotateZ(' + (index * 45) + 'deg)'
+                    arrow = spinner.appendChild(document.createElement('div'));
+                    arrow.className='arrow' + main;
+                    arrow.style.webkitTransform = 'rotateZ(' + (index * 45) + 'deg)'
+                });
+
+                var lastHeading = 0;
+                window.addEventListener('deviceorientation', function(e) {
+                    var heading = e.webkitCompassHeading + window.orientation;
+                    if (Math.abs(heading - lastHeading)<180) {
+                        spinner.style.webkitTransition = 'all 0.2s ease-in-out';
+                    } else {
+                        spinner.style.webkitTransition = 'none';
+                    }
+                    spinner.style.webkitTransform = 'rotateZ(-' + heading + 'deg)';
+                    lastHeading = heading;
+                }, false);
+
+                document.body.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                }, false);
+
+                window.addEventListener('orientationchange', function(e) {
+                    window.scrollTo(0,1);
+                }, false);
+
+                setTimeout(function () {window.scrollTo(0,1);}, 0);
+
+            }, false);
+        </script>
+
+        <style>
+            body {
+                background: black;
+                margin:0;
+                height:460px;
+            }
+            #compass {
+                background-image:-webkit-radial-gradient(30% 30%, #FFEE72, #666900);
+                margin:auto;
+                border-radius:130px;
+                width:240px;
+                height:240px;
+                display:block;
+            }
+            @media (orientation:landscape) {
+                #compass {
+                    margin-top:20px;
+                }
+            }
+            @media (orientation:portrait) {
+                #compass {
+                    margin-top:80px;
+                }
+            }
+            #spinner {
+                background-image:-webkit-radial-gradient(30% 30%, #FFF6F4, #D1C790);
+                box-shadow:0 0 4px #444 inset;
+                position:relative;
+                top:20px;
+                left:20px;
+                border-radius:100px;
+                width:200px;
+                height:200px;
+                -webkit-transition: all 0.2s ease-in-out;
+            }
+            #pin {
+                background-image:-webkit-radial-gradient(30% 30%, #FFEE72, #666900);
+                box-shadow:0 0 4px #444;
+                position:relative;
+                top:90px;
+                left:90px;
+                border-radius:10px;
+                width:20px;
+                height:20px;
+            }
+            .degree, .point, .arrow {
+                position:absolute;
+                left:80px;
+                width:40px;
+                text-align:center;
+                top:5px;
+                -webkit-transform-origin:20px 95px;
+            }
+            .degree {
+                color:#222;
+            }
+            .point {
+                top:45px;
+                -webkit-transform-origin:20px 55px;
+                font-size:10px;
+            }
+            .point.main {
+                font-weight:bold;
+                font-size:larger;
+            }
+            .arrow {
+                left:95px;
+                top:35px;
+                -webkit-transform-origin:5px 65px;
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-bottom: 5px solid #777;
+            }
+            .arrow.main {
+                border-bottom: 10px solid #444;
+            }
+
+        </style>
+
+    </head>
+    <body/>
+</html>
